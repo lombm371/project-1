@@ -4,22 +4,22 @@
     <meta charset="utf-8" />
     <title>Flower fall</title>
     <style>
-        /* starting off-screen at the top, fixed to the right */
+        
         #falling {
             position: fixed;
             right: 700px;
-            top: -300px; /* start above the viewport */
+            top: -300px; 
             transform: scale(0.4);
             transform-origin: top right;
-            /* play the fall once, keep the final position (forwards) */
+      
             animation: fall 3s linear forwards;
-            cursor: pointer; /* optional if you want it to feel clickable */
+            cursor: pointer; 
         }
 
-        /* animate top from above the screen to the bottom of the viewport */
+
         @keyframes fall {
             to {
-                /* land near the bottom of the viewport; adjust 120px if your image size differs */
+             
                 top: calc(100vh - 120px);
             }
         }
@@ -29,7 +29,6 @@
     <img id="falling" src="images/flower.png" alt="flower" aria-label="Open story2" />
 
     <script>
-        // When the CSS animation finishes, navigate to story2.html
         document.getElementById('falling').addEventListener('animationend', function () {
             window.location.href = 'story2.html';
         });

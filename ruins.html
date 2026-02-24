@@ -12,7 +12,7 @@
         .wrap-6 span { display:inline-block; white-space:nowrap; margin-right:.35rem; }
         .wrap-6 span:nth-of-type(6n)::after { content:""; display:block; }
 
-        /* Per-paragraph quiz overlay styles */
+        
         .para-wrapper { position: relative; max-width:60ch; margin:1rem auto; }
         .quiz-overlay {
             position: absolute;
@@ -31,11 +31,11 @@
         .quiz-box input[type="number"] { width: 6rem; padding: .25rem .5rem; font-size: 1rem; }
         .quiz-box button { margin-left: .5rem; padding: .35rem .6rem; }
         .quiz-box .feedback { margin-top: .5rem; min-height: 1.2em; color: #b00; }
-        /* Hide underlying words from assistive tech until revealed */
+        
         .locked [role="word"] { visibility: hidden; }
     </style>
 
-    <!-- Wrap each paragraph in .wrap-6; JS below will split into words and force a line break every 6 words -->
+   
     <p class="wrap-6">No one saw him disembark in the unanimous night, no one saw the bamboo canoe sink into the sacred mud, but in a few days there was no one who did not know that the taciturn man came from the South and that his home had been one of those numberless villages upstream in the deeply cleft side of the mountain, where the Zend language has not been contaminated by Greek and where leprosy is infrequent. What is certain is that the grey man kissed the mud, climbed up the bank with pushing aside (probably, without feeling) the blades which were lacerating his flesh, and crawled, nauseated and bloodstained, up to the circular enclosure crowned with a stone tiger or horse, which sometimes was the color of flame and now was that of ashes. This circle was a temple which had been devoured by ancient fires, profaned by the miasmal jungle, and whose god no longer received the homage of men. The stranger stretched himself out beneath the pedestal. He was awakened by the sun high overhead. He was not astonished to find that his wounds had healed; he closed his pallid eyes and slept, not through weakness of flesh but through determination of will. He knew that this temple was the place required for his invincible intent; he knew that the incessant trees had not succeeded in strangling the ruins of another propitious temple downstream which had once belonged to gods now burned and dead; he knew that his immediate obligation was to dream. Toward midnight he was awakened by the inconsolable shriek of a bird. Tracks of bare feet, some figs and a jug warned him that the men of the region had been spying respectfully on his sleep, soliciting his protection or afraid of his magic. He felt a chill of fear, and sought out a sepulchral niche in the dilapidated wall where he concealed himself among unfamiliar leaves.</p>
 
     <p class="wrap-6">The purpose which guided him was not impossible, though supernatural. He wanted to dream a man; he wanted to dream him in minute entirety and impose him on reality. This magic project had exhausted the entire expanse of his mind; if someone had asked him his name or to relate some event of his former life, he would not have been able to give an answer. This uninhabited, ruined temple suited him, for it is contained a minimum of visible world; the proximity of the workmen also suited him, for they took it upon themselves to provide for his frugal needs. The rice and fruit they brought him were nourishment enough for his body, which was consecrated to the sole task of sleeping and dreaming.</p>
@@ -59,16 +59,15 @@
     <p class="wrap-6">His misgivings ended abruptly, but not without certain forewarnings. First (after a long drought) a remote cloud, as light as a bird, appeared on a hill; then, toward the South, the sky took on the rose color of leopard's gums; then came clouds of smoke which rusted the metal of the nights; afterwards came the panic-stricken flight of wild animals. For what had happened many centuries before was repeating itself. The ruins of the sanctuary of the god of Fire was destroyed by fire. In a dawn without birds, the wizard saw the concentric fire licking the walls. For a moment, he thought of taking refuge in the water, but then he understood that death was coming to crown his old age and absolve him from his labors. He walked toward the sheets of flame. They did not bite his flesh, they caressed him and flooded him without heat or combustion. With relief, with humiliation, with terror, he understood that he also was an illusion, that someone else was dreaming him.</p>
 
     <script>
-        // Show only one quiz overlay at a time and match quiz font to paragraph font
         (function(){
             function makeQuestion(){
                 function randInt(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
                 var ops = ['+','-','*','/'];
-                var terms = Math.random() < 0.6 ? 3 : 2; // mostly 3-term expressions
+                var terms = Math.random() < 0.6 ? 3 : 2; 
                 var nums = [], opsChosen = [];
                 for(var i=0;i<terms;i++) nums.push(randInt(2,99));
                 for(var i=0;i<terms-1;i++) opsChosen.push(ops[Math.floor(Math.random()*ops.length)]);
-                // ensure integer divisions by making dividend a multiple of divisor
+               
                 for(var i=0;i<opsChosen.length;i++){
                     if(opsChosen[i]==='/'){
                         var denom = nums[i+1] || randInt(2,12);
@@ -82,7 +81,7 @@
                 if(terms === 2){
                     expr = nums[0] + ' ' + opsChosen[0] + ' ' + nums[1];
                 } else {
-                    // add parentheses to increase difficulty
+                    
                     if(Math.random() < 0.5){
                         expr = '('+nums[0]+' '+opsChosen[0]+' '+nums[1]+') '+opsChosen[1]+' '+nums[2];
                     } else {
@@ -99,7 +98,7 @@
             var wrappers = [];
 
             paras.forEach(function(p, index){
-                // split into words and mark role
+                
                 var words = p.textContent.trim().split(/\s+/);
                 p.textContent = '';
                 words.forEach(function(w){
@@ -109,14 +108,14 @@
                     p.appendChild(sp);
                 });
 
-                // wrap paragraph
+              
                 var wrapper = document.createElement('div');
                 wrapper.className = 'para-wrapper locked';
                 p.parentNode.replaceChild(wrapper, p);
                 wrapper.appendChild(p);
                 wrappers.push(wrapper);
 
-                // overlay
+               
                 var q = makeQuestion();
                 var overlay = document.createElement('div');
                 overlay.className = 'quiz-overlay';
@@ -128,10 +127,10 @@
                     + '</div>';
                 wrapper.appendChild(overlay);
 
-                // hide all overlays except the first
+              
                 overlay.style.display = (index === 0) ? 'flex' : 'none';
 
-                // match the quiz box font to the paragraph's computed font
+              
                 try{
                     var pStyle = window.getComputedStyle(p);
                     var quizBox = overlay.querySelector('.quiz-box');
@@ -146,7 +145,7 @@
                     wrapper.classList.remove('locked');
                     overlay.remove();
                     p.querySelectorAll('[role="word"]').forEach(function(s){ s.style.visibility = 'visible'; });
-                    // show next overlay if present
+               
                     var next = wrappers[wrappers.indexOf(wrapper) + 1];
                     if(next){
                         var nextOverlay = next.querySelector('.quiz-overlay');

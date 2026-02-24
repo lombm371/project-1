@@ -466,12 +466,12 @@
         const out = document.getElementById('content');
         const paragraphs = raw.split(/\n\s*\n/);
 
-        const revealDelay = 10000; // 10 seconds
+        const revealDelay = 10000; 
 
         paragraphs.forEach((p, pi) => {
             const para = document.createElement('div');
             para.className = 'paragraph';
-            // split paragraph into 6-word chunks (keep previous behavior)
+            
             const words = p.replace(/\s+/g,' ').trim().split(' ');
             if (words.length === 1 && words[0] === '') return;
             for (let i = 0; i < words.length; i += 6) {
@@ -501,7 +501,7 @@
     transform-origin: center center;
     pointer-events: auto;
     will-change: transform;
-    /* faster and larger vertical movement */
+   
     animation: floatY 2s ease-in-out infinite;
     transform: translateZ(0);
 }
